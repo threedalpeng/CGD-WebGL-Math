@@ -11,16 +11,16 @@
     "type": "git",
     "url": "git+https://github.com/threedalpeng/CGD-WebGL-Math.git"
   },
-  "scripts": {
-    "build": "tsc"
-  },
-  "keywords": [],
-  "author": "Kim Jeong-Won <threedalpeng@gmail.com>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/threedalpeng/CGD-WebGL-Math/issues"
   },
   "homepage": "https://github.com/threedalpeng/CGD-WebGL-Math#readme",
+  "keywords": [],
+  "author": "Kim Jeong-Won <threedalpeng@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
   "devDependencies": {
     "typescript": "^4.5.4"
   },
