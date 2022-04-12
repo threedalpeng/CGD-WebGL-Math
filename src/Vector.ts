@@ -1,15 +1,6 @@
-import {
-  PickForFixedLength2,
-  PickForFixedLength3,
-  PickForFixedLength4,
-} from "./FixedArray";
-import { Tuple2, Tuple3, Tuple4 } from "./Tuple";
-
-export class Vec2 extends PickForFixedLength2 implements Tuple2 {
-  constructor(v: Tuple2) {
-    super();
-    this[0] = v[0];
-    this[1] = v[1];
+export class Vec2 extends Float32Array {
+  constructor(v: Float32List) {
+    super(v);
   }
 
   get x() {
@@ -49,16 +40,16 @@ export class Vec2 extends PickForFixedLength2 implements Tuple2 {
     this[1] = val;
   }
 
-  add(v: Tuple2) {
+  add(v: Float32List) {
     return new Vec2([this[0] + v[0], this[1] + v[1]]);
   }
-  sub(v: Tuple2) {
+  sub(v: Float32List) {
     return new Vec2([this[0] - v[0], this[1] - v[1]]);
   }
   muli(i: number) {
     return new Vec2([this[0] * i, this[1] * i]);
   }
-  dot(v: Tuple2) {
+  dot(v: Float32List) {
     return this[0] * v[0] + this[1] * v[1];
   }
 
@@ -77,9 +68,9 @@ export class Vec2 extends PickForFixedLength2 implements Tuple2 {
 
 export function vec2(): Vec2;
 export function vec2(x: number): Vec2;
-export function vec2(v: Tuple2): Vec2;
+export function vec2(v: Float32List): Vec2;
 export function vec2(x: number, y: number): Vec2;
-export function vec2(x?: number | Tuple2, y?: number): Vec2 {
+export function vec2(x?: number | Float32List, y?: number): Vec2 {
   switch (typeof x) {
     case "number":
       return new Vec2([x, y ?? x]);
@@ -90,8 +81,8 @@ export function vec2(x?: number | Tuple2, y?: number): Vec2 {
   }
 }
 
-export class Vec3 extends PickForFixedLength3 implements Tuple3 {
-  constructor(v: Tuple3) {
+export class Vec3 extends Float32Array {
+  constructor(v: Float32List) {
     super();
     this[0] = v[0];
     this[1] = v[1];
@@ -153,19 +144,19 @@ export class Vec3 extends PickForFixedLength3 implements Tuple3 {
     this[2] = val;
   }
 
-  add(v: Tuple3) {
+  add(v: Float32List) {
     return new Vec3([this[0] + v[0], this[1] + v[1], this[2] + v[2]]);
   }
-  sub(v: Tuple3) {
+  sub(v: Float32List) {
     return new Vec3([this[0] - v[0], this[1] - v[1], this[2] - v[2]]);
   }
   muli(i: number) {
     return new Vec3([this[0] * i, this[1] * i, this[2] * i]);
   }
-  dot(v: Tuple3) {
+  dot(v: Float32List) {
     return this[0] * v[0] + this[1] * v[1] + this[2] * v[2];
   }
-  cross(v: Tuple3) {
+  cross(v: Float32List) {
     return new Vec3([
       this[1] * v[2] - this[2] * v[1],
       this[2] * v[0] - this[0] * v[2],
@@ -187,9 +178,9 @@ export class Vec3 extends PickForFixedLength3 implements Tuple3 {
 }
 export function vec3(): Vec3;
 export function vec3(x: number): Vec3;
-export function vec3(v: Tuple3): Vec3;
+export function vec3(v: Float32List): Vec3;
 export function vec3(x: number, y: number, z: number): Vec3;
-export function vec3(x?: number | Tuple3, y?: number, z?: number): Vec3 {
+export function vec3(x?: number | Float32List, y?: number, z?: number): Vec3 {
   switch (typeof x) {
     case "number":
       return new Vec3([x, y ?? x, z ?? x]);
@@ -200,8 +191,8 @@ export function vec3(x?: number | Tuple3, y?: number, z?: number): Vec3 {
   }
 }
 
-export class Vec4 extends PickForFixedLength4 implements Tuple4 {
-  constructor(v: Tuple4) {
+export class Vec4 extends Float32Array {
+  constructor(v: Float32List) {
     super();
     this[0] = v[0];
     this[1] = v[1];
@@ -282,7 +273,7 @@ export class Vec4 extends PickForFixedLength4 implements Tuple4 {
     this[3] = val;
   }
 
-  add(v: Tuple4) {
+  add(v: Float32List) {
     return new Vec4([
       this[0] + v[0],
       this[1] + v[1],
@@ -290,7 +281,7 @@ export class Vec4 extends PickForFixedLength4 implements Tuple4 {
       this[3] + v[3],
     ]);
   }
-  sub(v: Tuple4) {
+  sub(v: Float32List) {
     return new Vec4([
       this[0] - v[0],
       this[1] - v[1],
@@ -301,7 +292,7 @@ export class Vec4 extends PickForFixedLength4 implements Tuple4 {
   muli(i: number) {
     return new Vec4([this[0] * i, this[1] * i, this[2] * i, this[3] * i]);
   }
-  dot(v: Tuple4) {
+  dot(v: Float32List) {
     return this[0] * v[0] + this[1] * v[1] + this[2] * v[2] + this[3] * v[3];
   }
 
@@ -335,10 +326,10 @@ export class Vec4 extends PickForFixedLength4 implements Tuple4 {
 
 export function vec4(): Vec4;
 export function vec4(x: number): Vec4;
-export function vec4(v: Tuple4): Vec4;
+export function vec4(v: Float32List): Vec4;
 export function vec4(x: number, y: number, z: number, w: number): Vec4;
 export function vec4(
-  x?: number | Tuple4,
+  x?: number | Float32List,
   y?: number,
   z?: number,
   w?: number
