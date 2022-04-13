@@ -1,14 +1,14 @@
 {
   "name": "cgd-webgl-math",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A very simple typescript math library for WebGL study, including Vector and Matrix",
   "main": "./dist/cgd-webgl-math.umd.js",
   "module": "./dist/cgd-webgl-math.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.es.js",
-      "require": "./dist/my-lib.umd.js"
+      "import": "./dist/cgd-webgl-math.es.js",
+      "require": "./dist/cgd-webgl-math.umd.js"
     }
   },
   "files": [
@@ -27,7 +27,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
