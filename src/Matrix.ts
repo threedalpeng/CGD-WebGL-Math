@@ -1,12 +1,7 @@
-import { NumberArray } from "./ArrayType";
 import { deg2rad } from "./utils";
 import { Vec3, Vec4 } from "./Vector";
 
 export class Mat3 extends Float32Array {
-  constructor(m: Float32List) {
-    super(m);
-  }
-
   get _00() {
     return this[0];
   }
@@ -62,10 +57,6 @@ export class Mat3 extends Float32Array {
     this[8] = val;
   }
 
-  row(i: number) {
-    return new Vec3(this.subarray(i * 3, i * 3 + 2));
-  }
-
   add(m: Float32List) {
     return new Mat3([
       this[0] + m[0],
@@ -107,19 +98,23 @@ export class Mat3 extends Float32Array {
   }
   mulv(v: Float32List) {
     return new Vec3([
-      new Vec3(this.row(0)).dot(v),
-      new Vec3(this.row(1)).dot(v),
-      new Vec3(this.row(2)).dot(v),
+      v[0] * this[0] + v[1] * this[3] + v[2] * this[6],
+      v[0] * this[1] + v[1] * this[4] + v[2] * this[7],
+      v[0] * this[2] + v[1] * this[5] + v[2] * this[8],
     ]);
   }
   mul(m: Float32List) {
-    const t = (m instanceof Mat3 ? m : new Mat3(m)).transpose();
-    return new Mat3(
-      ([] as NumberArray)
-        .concat(...t.mulv(this.row(0)))
-        .concat(...t.mulv(this.row(1)))
-        .concat(...t.mulv(this.row(2)))
-    );
+    return new Mat3([
+      m[0] * this[0] + m[1] * this[3] + m[2] * this[6],
+      m[0] * this[1] + m[1] * this[4] + m[2] * this[7],
+      m[0] * this[2] + m[1] * this[5] + m[2] * this[8],
+      m[3] * this[0] + m[4] * this[3] + m[5] * this[6],
+      m[3] * this[1] + m[4] * this[4] + m[5] * this[7],
+      m[3] * this[2] + m[4] * this[5] + m[5] * this[8],
+      m[6] * this[0] + m[7] * this[3] + m[8] * this[6],
+      m[6] * this[1] + m[7] * this[4] + m[8] * this[7],
+      m[6] * this[2] + m[7] * this[5] + m[8] * this[8],
+    ]);
   }
 
   static identity() {
@@ -167,25 +162,21 @@ export class Mat3 extends Float32Array {
     ]);
   }
 
-  static translate(x: number, y: number) {
-    return new Mat3([1, 0, 0, 0, 1, 0, x, y, 1]);
+  static translate(v: Float32List) {
+    return new Mat3([1, 0, 0, 0, 1, 0, v[0], v[1], 1]);
   }
   static rotate(angle: number) {
     const radian = deg2rad(angle);
     const s = Math.sin(radian);
     const c = Math.cos(radian);
-    return new Mat3([c, -s, 0, s, c, 0, 0, 0, 1]);
+    return new Mat3([c, s, 0, -s, c, 0, 0, 0, 1]);
   }
-  static scale(x: number, y: number) {
-    return new Mat3([x, 0, 0, 0, y, 0, 0, 0, 1]);
+  static scale(v: Float32List) {
+    return new Mat3([v[0], 0, 0, 0, v[1], 0, 0, 0, 1]);
   }
 }
 
 export class Mat4 extends Float32Array {
-  constructor(m: Float32List) {
-    super(m);
-  }
-
   get _00() {
     return this[0];
   }
@@ -284,7 +275,7 @@ export class Mat4 extends Float32Array {
   }
 
   row(i: number) {
-    return new Vec4(this.subarray(i * 4, i * 4 + 3));
+    return new Vec4(this.subarray(i * 4, i * 4 + 4));
   }
 
   add(m: Float32List) {
@@ -349,25 +340,35 @@ export class Mat4 extends Float32Array {
   }
   mulv(v: Float32List) {
     return new Vec4([
-      new Vec4(this.row(0)).dot(v),
-      new Vec4(this.row(1)).dot(v),
-      new Vec4(this.row(2)).dot(v),
-      new Vec4(this.row(3)).dot(v),
+      v[0] * this[0] + v[1] * this[4] + v[2] * this[8] + v[3] * this[12],
+      v[0] * this[1] + v[1] * this[5] + v[2] * this[9] + v[3] * this[13],
+      v[0] * this[2] + v[1] * this[6] + v[2] * this[10] + v[3] * this[14],
+      v[0] * this[3] + v[1] * this[7] + v[2] * this[11] + v[3] * this[15],
     ]);
   }
   mul(m: Float32List) {
-    const t = (m instanceof Mat4 ? m : new Mat4(m)).transpose();
-    return new Mat4(
-      ([] as NumberArray)
-        .concat(...t.mulv(this.row(0)))
-        .concat(...t.mulv(this.row(1)))
-        .concat(...t.mulv(this.row(2)))
-        .concat(...t.mulv(this.row(3)))
-    );
+    return new Mat4([
+      m[0] * this[0] + m[1] * this[4] + m[2] * this[8] + m[3] * this[12],
+      m[0] * this[1] + m[1] * this[5] + m[2] * this[9] + m[3] * this[13],
+      m[0] * this[2] + m[1] * this[6] + m[2] * this[10] + m[3] * this[14],
+      m[0] * this[3] + m[1] * this[7] + m[2] * this[11] + m[3] * this[15],
+      m[4] * this[0] + m[5] * this[4] + m[6] * this[8] + m[7] * this[12],
+      m[4] * this[1] + m[5] * this[5] + m[6] * this[9] + m[7] * this[13],
+      m[4] * this[2] + m[5] * this[6] + m[6] * this[10] + m[7] * this[14],
+      m[4] * this[3] + m[5] * this[7] + m[6] * this[11] + m[7] * this[15],
+      m[8] * this[0] + m[9] * this[4] + m[10] * this[8] + m[11] * this[12],
+      m[8] * this[1] + m[9] * this[5] + m[10] * this[9] + m[11] * this[13],
+      m[8] * this[2] + m[9] * this[6] + m[10] * this[10] + m[11] * this[14],
+      m[8] * this[3] + m[9] * this[7] + m[10] * this[11] + m[11] * this[15],
+      m[12] * this[0] + m[13] * this[4] + m[14] * this[8] + m[15] * this[12],
+      m[12] * this[1] + m[13] * this[5] + m[14] * this[9] + m[15] * this[13],
+      m[12] * this[2] + m[13] * this[6] + m[14] * this[10] + m[15] * this[14],
+      m[12] * this[3] + m[13] * this[7] + m[14] * this[11] + m[15] * this[15],
+    ]);
   }
 
   static identity() {
-    return new Mat3([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+    return new Mat4([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
   }
 
   transpose() {

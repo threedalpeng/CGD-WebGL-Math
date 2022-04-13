@@ -1,8 +1,4 @@
 export class Vec2 extends Float32Array {
-  constructor(v: Float32List) {
-    super(v);
-  }
-
   get x() {
     return this[0];
   }
@@ -82,13 +78,6 @@ export function vec2(x?: number | Float32List, y?: number): Vec2 {
 }
 
 export class Vec3 extends Float32Array {
-  constructor(v: Float32List) {
-    super();
-    this[0] = v[0];
-    this[1] = v[1];
-    this[2] = v[2];
-  }
-
   get x() {
     return this[0];
   }
@@ -192,14 +181,6 @@ export function vec3(x?: number | Float32List, y?: number, z?: number): Vec3 {
 }
 
 export class Vec4 extends Float32Array {
-  constructor(v: Float32List) {
-    super();
-    this[0] = v[0];
-    this[1] = v[1];
-    this[2] = v[2];
-    this[3] = v[3];
-  }
-
   get x() {
     return this[0];
   }
