@@ -2,8 +2,15 @@
   "name": "cgd-webgl-math",
   "version": "0.4.0",
   "description": "A very simple typescript math library for WebGL study, including Vector and Matrix",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cgd-webgl-math.umd.js",
+  "module": "./dist/cgd-webgl-math.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.es.js",
+      "require": "./dist/my-lib.umd.js"
+    }
+  },
   "files": [
     "/dist"
   ],
@@ -19,10 +26,15 @@
   "author": "Kim Jeong-Won <threedalpeng@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^4.5.4"
+    "@rollup/plugin-typescript": "^8.3.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.3",
+    "vite": "^2.9.1"
   },
   "dependencies": {
     "@types/node": "^17.0.23"
