@@ -1,6 +1,6 @@
 {
   "name": "cgd-webgl-math",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "A very simple typescript math library for WebGL study, including Vector and Matrix",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
